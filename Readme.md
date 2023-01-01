@@ -12,6 +12,6 @@ netsh² = is program for Microsoft Windows NT-Linie created by Microsoft Windows
 # Run Script
 
 ```
-cd Network.information
+cd Network-information
 python main.py
 ```
