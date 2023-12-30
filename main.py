@@ -32,6 +32,8 @@ class NetworkInformation:
         profile_names = self.get_network_names()
         profile_names = profile_names.split('Pro')
         listen = []
+        if not profile_names:
+            return None
         for i in range(len(profile_names)):
             listen.append(profile_names[i].split(':'))
         listen.pop(0)
