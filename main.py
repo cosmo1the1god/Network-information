@@ -29,26 +29,30 @@ class NetworkInformation:
         return proc.stdout.read()
 
     def automate(self):
-        profile_names = self.get_network_names()
-        profile_names = profile_names.split('Pro')
-        listen = []
-        for i in range(len(profile_names)):
-            listen.append(profile_names[i].split(':'))
-        listen.pop(0)
-        listen[0].pop(0)
-        listen[0].pop(0)
-        listen.pop(0)
-        network_names = set()
-        for b in range(len(listen)):
-            for a in range(len(listen[b])):
-                network_names.add(listen[b][1])
+        try:
+            profile_names = self.get_network_names()
+            profile_names = profile_names.split('Pro')
+            listen = []
+            for i in range(len(profile_names)):
+                listen.append(profile_names[i].split(':'))
+            listen.pop(0)
+            listen[0].pop(0)
+            listen[0].pop(0)
+            listen.pop(0)
+            network_names = set()
+            for b in range(len(listen)):
+                for a in range(len(listen[b])):
+                    network_names.add(listen[b][1])
 
-        for names in network_names:
-            command_net = ['netsh', 'wlan', 'show', 'profile', 'name', '=', f"{names.strip()}", "key=clear"]
-            print(command_net)
-            proc = subprocess.Popen(command_net, shell=True, stdout=subprocess.PIPE, stdin=subprocess.PIPE,
-                                    stderr=subprocess.PIPE, encoding='unicode_escape')
-            return proc.stdout.read()   
+            for names in network_names:
+                command_net = ['netsh', 'wlan', 'show', 'profile', 'name', '=', f"{names.strip()}", "key=clear"]
+                print(command_net)
+                proc = subprocess.Popen(command_net, shell=True, stdout=subprocess.PIPE, stdin=subprocess.PIPE,
+                                        stderr=subprocess.PIPE, encoding='unicode_escape')
+                return proc.stdout.read()   
+        except:
+            # Most likely listen[] was empty
+            return "\nNothing to show!"
 
 
 if __name__ == '__main__':
